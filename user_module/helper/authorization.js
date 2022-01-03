@@ -16,7 +16,7 @@ module.exports.authorization= async (req,res,next)=>{
             }
             else if(data.email){
                 
-                await User.findOne({
+                User.findOne({
                     email:data.email
                 
                 })
