@@ -1,16 +1,25 @@
-const mongoose = require("mongoose");
-const user = require('../model/user');
+const Services = require("../services/user");
 
 
-module.exports.getAllUsers=async(req,res)=>{
-    res.json({message:'getALLuser'});
+module.exports.getAllUsers=async (req,res)=>{
+    const data= await Services.getAllUser();
+    
+    res.json(data);
+    console.log(data);
 }
 
-module.exports.getUser=async(req,res)=>{
-    res.json({message:'getuser'});
+module.exports.getUser=async (req,res)=>{
+    const data= await Services.getUser(req.params.id);
+    res.json(data);
 }
 
-module.exports.updateUser=async(req,res)=>{
-    res.json({message:'updateuser'});
+module.exports.updateUser=async (req,res)=>{
+    const data=await Services.updateUser(req.params.id);
+    res.json(data);
+}
+
+module.exports.deleteUser=async (req,res)=>{
+    const data=await Services.deleteUser(req.params.id);
+    res.json(data);
 }
 

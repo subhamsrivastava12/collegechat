@@ -2,24 +2,34 @@ const User = require('../model/user');
 const bcrypt = require('bcrypt');
 
 
-module.exports.login=(req,res,next)=>{
+module.exports.login=async(email,password)=>{
+    console.log("email ",email);
     User.findOne({
-        email:req.body.email
+        email:email
     })
     .then((user)=>{
+        console.log("user",user);
         if(!user){
-            return {message:"user not found",status:404 ,output :false};;
+            const data= {message:"user not found",status:404 ,output :false};
+            console.log("data",data);
+            return data;
         }
-        const bool=bcrypt.compareSync(req.body.password,user.password);
+        const bool=bcrypt.compareSync(password,user.password);
+        console.log("bool",bool);
         if(!bool){
-            res.send({message:"Invalid credentials"});
+            const data={message:"Invalid Credentials",status:200 ,output :false};
+            console.log("data",data);
+            return data;
         }
         if(!user.email_verified){
-            res.send({message:"Please verify your email"});
+            const data={message:"Please verify your email",status:200 ,output :false};
+            console.log("data",data);
+            return data;
         }
         
         const data={message:"user login succesfully",status:200 ,output :true};
+        console.log("data",data);
         return data;
     })
-    .catch((err)=> {return { message: err.message ,status:500,output:false }});
+    .catch((err)=> {return data={ message: err.message ,status:500,output:false }});
 }

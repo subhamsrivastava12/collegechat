@@ -9,12 +9,13 @@ dotenv.config();
 
 
 
-module.exports.forgotpassword=async(username,email)=>{
+module.exports.forgotPassword=async(username,email)=>{
     const data={};
     User.findOne({
         email:email,
     })
     .then((user)=>{
+        console.log("user",user);
         if(!user){
             return data={
                 message:"user not found",
@@ -30,10 +31,18 @@ module.exports.forgotpassword=async(username,email)=>{
                 output:false
             }
         }
-        const token = jwt.sign({email:req.body.email},process.env.SECRET);
+        const token = jwt.sign({email:email},process.env.SECRET);
+        User.findByIdAndUpdate({ "_id": user._id }, {"resetPasswordtoken":token}, function (err, user) {
+            if (err) {
+                console.log("1 error");
+                const data = { message: err.message, status: 500, output: false };
+                return data;
+            }
+            return helper.sendMail(username,email,token);
+        });
 
         
-        return helper.sendMail(username,email,token);
+        
     })
     .catch((err)=>{ return { message: err.message,status:500 ,output:false}});
 }

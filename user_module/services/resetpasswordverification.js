@@ -4,11 +4,12 @@ const User = require('../model/user');
 
 
 module.exports.resetPasswordVerification=async(token)=>{
-    const data={};
+    let data ={};
     User.findOne({
         resetPasswordtoken:token,
     })
     .then((user)=>{
+        console.log(user);
         if(!user){
             return data={
                 message:"user not found",
@@ -24,8 +25,10 @@ module.exports.resetPasswordVerification=async(token)=>{
                 output:false
             }
         }
-        return data={message:"you can now reset your password",status:200,output:true};
+        data={message:"you can now reset your password",status:200,output:true};
+        console.log("data",data);
+        return data;
     })
-    .catch((err)=>{ return { message: err.message , status:500 ,output:false }});
+    .catch((err)=>{ return data={ message: err.message , status:500 ,output:false }});
 }
 

@@ -1,9 +1,10 @@
 const dotenv = require("dotenv");
-const services=require("../services/signup");
+const {signUp}=require("../services/signup");
 dotenv.config();
 
 
-module.exports.signUp=(req,res)=>{
-    const data=services.signUp(req.body.email,req.body.email,req.body.password);
-    res.json(data);
+module.exports.signUp=async (req,res)=>{
+    const data=await signUp(req.body.username,req.body.email,req.body.password);
+    console.log("data",data);
+    res.send(data);
 }

@@ -5,12 +5,14 @@ const bcrypt = require('bcrypt');
 dotenv.config();
 
 
-module.exports.resetpassword=(email,password)=>{
-
+module.exports.resetPassword=(token,email,password)=>{
+    let data={};
     User.findOne({
         email:email,
+        resetPasswordtoken:token
     })
     .then((user)=>{
+        console.log(user);
         if(!user){
             return data={
                 message:"user not found",
@@ -30,13 +32,17 @@ module.exports.resetpassword=(email,password)=>{
 
     const hashed=bcrypt.hashSync(password,10);
     try{
-
-    User.findOneAndUpdate({email:email},{password:hashed})
-    return data={
-        message:"password changed succesfully",
-        status:200,
-        output:true
-    }
+        User.findByIdAndUpdate({ "_id": user._id }, {"password":hashed}, function (err, user) {
+            if (err) {
+                console.log("error");
+                const data = { message: err.message, status: 500, output: false };
+                return data;
+            }
+            data={message:"Password updated successfully",status:200,output:true};
+            console.log(data);
+            return data;
+        });
+    
     }
     catch(err){
         return data={

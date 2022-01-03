@@ -4,6 +4,7 @@ const User = require('../model/user');
 
 
 module.exports.emailVerification=async(confirmationCode)=>{
+    console.log("code ",confirmationCode);
     const data={};
     User.findOne({
         confirmationCode:confirmationCode,
@@ -12,7 +13,8 @@ module.exports.emailVerification=async(confirmationCode)=>{
         if(!user){
             return data={
                 message:"user not found",
-                status:404
+                status:404,
+                output:false
             }
             
         }
@@ -21,7 +23,8 @@ module.exports.emailVerification=async(confirmationCode)=>{
             if(err){
                 data={
                     message:err.message,
-                    status:500
+                    status:500,
+                    output:false
                 }
                 return data;
             }
@@ -29,6 +32,6 @@ module.exports.emailVerification=async(confirmationCode)=>{
         });
         return data={message:"account verify successfully",status:200,output:true};
     })
-    .catch((err)=>{ return { message: err.message,status:500 }});
+    .catch((err)=>{ return { message: err.message,status:500,output:false }});
 }
 

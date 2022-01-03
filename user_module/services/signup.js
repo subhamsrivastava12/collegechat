@@ -1,31 +1,59 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const User = require('../model/user');
-const bcrypt = require('bcrypt');
-const helper = require("../helper/sendmail");
-
+const helper = require("../helper/emailverification");
+const { createUser } = require("../helper/signup");
 dotenv.config();
 
 
-module.exports.signUp=(username,email,password)=>{
-    const token = jwt.sign({email:req.body.email},process.env.SECRET);
+module.exports.signUp = async (username, email, password) => {
+    const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
 
-    const user = new User({
-        username:username,
-        email:email,
-        password:bcrypt.hashSync(password,10),
-        confirmationCode: token
 
-    });
+    User.findOne({$or: [{email: email},{username: username}]})
+    .then((user)=>{
+        console.log("user",user);
+        if(!user){
+            
+            const newuser = createUser(username, email, password, confirmationCode);
+            newuser.save((err) => {
+                if (err) {
+                    console.log("1 error");
+                    const data = { message: err.message, status: 500, output: false };
+                    return data;
 
-    user.save((err)=>{
-        if(err){
-            res.status(500).send({message:err.message});
-            return;
+                }
+
+                return helper.sendMail(newuser.username, newuser.email, newuser.confirmationCode);
+
+            });
+
         }
-        
-        
-        return helper.sendMail(user.username,user.email,user.confirmationCode);
+        else{
+            if (user.email_verified) {
+                const data = { message: "Email Id is already in use", status: 200, output: false };
+                return data;
+            }
+            else {
+                const newuser = createUser(username, email, password, confirmationCode);
+                User.findByIdAndUpdate({ "_id": user._id }, newuser, function (err, user) {
+                    if (err) {
+                        console.log("2 error");
+                        const data = { message: err.message, status: 500, output: false };
+                        return data;
+                    }
+                    return helper.sendMail(newuser.username, newuser.email, newuser.confirmationCode);
+                });
+            }
+        }
+    })
+    .catch((err)=>{
+        const data = { message: err.message, status: 500, output: false };
+        return data;
+    })
+    
 
-    });
+    
+
+    
 }

@@ -1,10 +1,10 @@
 const dotenv = require("dotenv");
-const services=require("../services/resetpassword");
+const {resetPassword}=require("../services/resetpassword");
 dotenv.config();
 
 
-module.exports.resetpassword=(req,res)=>{
-    const data=services.resetpassword(req.body.email,req.body.password);
+module.exports.resetPassword=(req,res)=>{
+    const data=resetPassword(req.params['token'],req.body.email,req.body.password);
     res.json(data);
 }
 

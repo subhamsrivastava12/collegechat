@@ -2,15 +2,20 @@ const axios = require('axios')
 
 
 module.exports.sendMail = (username,email,confirmationCode)=>{
-    axios.post('localhost:5000/verifyemail',{
+    console.log(username,email,confirmationCode);
+    axios.post('https://mailprovider.herokuapp.com/verifyemail',{
         username:username,
         email:email,
         confirmationCode:confirmationCode
+        
     })
     .then((res)=>{
+        //console.log("res",res);
         return res;
+        
     })
     .catch((err)=>{
-        return {data:err.message,status:500,output:false};
+        console.log("error");
+        return data={"message":err.message,status:500,output:false};
     })
 }

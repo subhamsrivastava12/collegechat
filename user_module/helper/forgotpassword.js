@@ -2,7 +2,7 @@ const axios = require('axios')
 
 
 module.exports.sendMail = (username,email,token)=>{
-    axios.post('localhost:5000/resetpassword',{
+    axios.post('https://mailprovider.herokuapp.com/resetpassword',{
         username:username,
         email:email,
         resetPasswordtoken:token
