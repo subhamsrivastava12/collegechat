@@ -1,9 +1,9 @@
 const User = require('../model/user');
 
 
-module.exports.getAllUser= ()=>{
+module.exports.getAllUser= async ()=>{
     let data={};
-     User.find({},{limit:10},function(err,users){
+    await User.find({},{limit:10},function(err,users){
         if(err){
             data={message:err.message,status:500,output:false}
             return data;
@@ -31,9 +31,9 @@ module.exports.getUser=async (id)=>{
     return data;
 }
 
-module.exports.updateUser=(id,updatedValue)=>{
+module.exports.updateUser= async (id,updatedValue)=>{
     let data={};
-    User.findByIdAndUpdate({"_id":id},updatedValue,function(err,docs){
+    await User.findByIdAndUpdate({"_id":id},updatedValue,function(err,docs){
         if(err){
             data={message:err.message,status:500,output:false}
             return data;
@@ -46,9 +46,9 @@ module.exports.updateUser=(id,updatedValue)=>{
     return data;
 }
 
-module.exports.deleteUser=(id)=>{
+module.exports.deleteUser= async (id)=>{
     let data={};
-    User.remove({"_id":uid}, function(err, result) { 
+    await User.remove({"_id":uid}, function(err, result) { 
         if(result===1){
             data={message:"your account updated successfully",status:200,output:true};
             return data;

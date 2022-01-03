@@ -5,17 +5,17 @@ const {forgotPassword} = require("../controller/forgotpassword");
 const {resetPasswordVerification} = require("../controller/resetpasswordverification");
 const {resetPassword} = require("../controller/resetpassword");
 const {emailVerification}=require("../controller/emailverification");
+const {authorization} = require("../helper/authorization");
 
 
 
-
-router.get('/',getAllUsers);
-router.get('/:id',getUser);
-router.put('/:id',updateUser);
-router.get('/delete/:id',deleteUser);
+router.get('/',authorization,getAllUsers);
+router.get('/:id',authorization,getUser);
+router.put('/:id',authorization,updateUser);
+router.get('/delete/:id',authorization,deleteUser);
 router.get('/email_verify/:code',emailVerification);
-router.post('/forgot_password',forgotPassword)
-router.get('/forgot_password/:token',resetPasswordVerification);
-router.post('/forgot_password/:token/reset_password',resetPassword);
+router.post('/forgot_password',authorization,forgotPassword)
+router.get('/forgot_password/:token',authorization,resetPasswordVerification);
+router.post('/forgot_password/:token/reset_password',authorization,resetPassword);
 
 module.exports=router;

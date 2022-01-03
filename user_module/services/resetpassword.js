@@ -5,9 +5,9 @@ const bcrypt = require('bcrypt');
 dotenv.config();
 
 
-module.exports.resetPassword=(token,email,password)=>{
+module.exports.resetPassword= async (token,email,password)=>{
     let data={};
-    User.findOne({
+    await User.findOne({
         email:email,
         resetPasswordtoken:token
     })

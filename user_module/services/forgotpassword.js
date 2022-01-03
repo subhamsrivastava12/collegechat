@@ -11,7 +11,7 @@ dotenv.config();
 
 module.exports.forgotPassword=async(username,email)=>{
     const data={};
-    User.findOne({
+    await User.findOne({
         email:email,
     })
     .then((user)=>{

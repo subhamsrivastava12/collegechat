@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 const {resetPassword}=require("../services/resetpassword");
+
 dotenv.config();
 
 

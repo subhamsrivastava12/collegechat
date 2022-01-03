@@ -10,7 +10,7 @@ module.exports.signUp = async (username, email, password) => {
     const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
 
 
-    User.findOne({$or: [{email: email},{username: username}]})
+    await User.findOne({$or: [{email: email},{username: username}]})
     .then((user)=>{
         console.log("user",user);
         if(!user){
@@ -30,11 +30,17 @@ module.exports.signUp = async (username, email, password) => {
 
         }
         else{
-            if (user.email_verified) {
+            const verified=Boolean(user.email_verified);
+            
+            if(verified){
+
+                
                 const data = { message: "Email Id is already in use", status: 200, output: false };
                 return data;
+    
             }
-            else {
+            else{    
+
                 const newuser = createUser(username, email, password, confirmationCode);
                 User.findByIdAndUpdate({ "_id": user._id }, newuser, function (err, user) {
                     if (err) {
