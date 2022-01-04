@@ -5,7 +5,7 @@ const User = require('../model/user');
 
 module.exports.resetPasswordVerification=async(token)=>{
     var data ={};
-    await User.findOne({
+    const response=await User.findOne({
         resetPasswordtoken:token,
     })
     .then((user)=>{
@@ -30,5 +30,7 @@ module.exports.resetPasswordVerification=async(token)=>{
         return data;
     })
     .catch((err)=>{ return data={ message: err.message , status:500 ,output:false }});
+
+    return response;
 }
 

@@ -7,13 +7,17 @@ dotenv.config();
 
 module.exports.resetPassword= async (token,email,password)=>{
     var data={};
-    await User.findOne({
+    var bool=false;
+    var user1={};
+    var response=await User.findOne({
         email:email,
         resetPasswordtoken:token
     })
     .then((user)=>{
-        console.log(user);
+        //console.log(user);
+        user1=user;
         if(!user){
+            bool=true;
             return data={
                 message:"user not found",
                 status:404,
@@ -22,37 +26,35 @@ module.exports.resetPassword= async (token,email,password)=>{
             
         }
         if(!user.email_verified){
+            bool=true;
             return data={
                 message:"verify your email id first",
                 status:200,
                 output:false
             }
         }
-
+    })
+    
+    if(bool){
+        return response;
+    }
 
     const hashed=bcrypt.hashSync(password,10);
-    try{
-        User.findByIdAndUpdate({ "_id": user._id }, {"password":hashed}, function (err, user) {
-            if (err) {
-                console.log("error");
-                const data = { message: err.message, status: 500, output: false };
-                return data;
-            }
-            data={message:"Password updated successfully",status:200,output:true};
-            console.log(data);
-            return data;
-        });
+    console.log("user1",user1);
+    response=await User.findByIdAndUpdate({ "_id": user1._id }, {"password":hashed})
+    .then((val)=>{
+        data={message:"Password updated successfully",status:200,output:true};
+        console.log(data);
+        return data;
+    })
+    .catch((err)=>{
+        console.log("error");
+        const data = { message: err.message, status: 500, output: false };
+        return data;
+    })
     
-    }
-    catch(err){
-        return data={
-            message:err.message,
-            status:500,
-            output:false
-        }
-    }        
 
-    });
+    return response;
 }
 
 

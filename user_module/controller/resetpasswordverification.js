@@ -4,9 +4,15 @@ dotenv.config();
 
 
 module.exports.resetPasswordVerification=async (req,res)=>{
-    const data=await resetPasswordVerification(req.params['token']);
-    console.log("data",data);
-    res.json(data);
+    resetPasswordVerification(req.params['token'])
+    .then((data)=>{
+        console.log("data",data);
+        res.json(data);
+    })
+    .catch((err)=>{
+        res.status(500).send(err.message);
+    })
+    
 }
 
 

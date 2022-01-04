@@ -5,7 +5,13 @@ dotenv.config();
 
 module.exports.emailVerification=(req,res)=>{
     console.log(req.params.code);
-    const data=emailVerification(req.params['code']);
-    res.json(data);
+    emailVerification(req.params['code'])
+    .then((data)=>{
+        console.log("data",data);
+        res.json(data);
+    })
+    .catch((err)=>{
+        res.status(500).send(err.message);
+    })
 }
 

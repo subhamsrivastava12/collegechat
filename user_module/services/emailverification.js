@@ -5,8 +5,8 @@ const User = require('../model/user');
 
 module.exports.emailVerification=async(confirmationCode)=>{
     console.log("code ",confirmationCode);
-    const data={};
-    User.findOne({
+    var data={};
+    const response=await User.findOne({
         confirmationCode:confirmationCode,
     })
     .then((user)=>{
@@ -33,5 +33,8 @@ module.exports.emailVerification=async(confirmationCode)=>{
         return data={message:"account verify successfully",status:200,output:true};
     })
     .catch((err)=>{ return { message: err.message,status:500,output:false }});
+
+    return response;
+
 }
 

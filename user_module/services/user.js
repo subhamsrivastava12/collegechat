@@ -1,63 +1,80 @@
 const User = require('../model/user');
+const helper = require("../helper/emailverification");
+const jwt = require("jsonwebtoken");
 
 
 module.exports.getAllUser= async ()=>{
     var data={};
-    await User.find({},{limit:10},function(err,users){
-        if(err){
-            data={message:err.message,status:500,output:false}
-            return data;
-        }
-        else{
-            data={users:users,status:200,output:true};
-            console.log(data);
-            return data;
-        }
-    });
+    const response =await User.find({},{limit:10})
+    .then((users)=>{
+        data={users:users,status:200,output:true};
+        console.log(data);
+        return data;
+    })
+    .catch((err)=>{
+        data={message:err.message,status:500,output:false}
+        return data;
+    })
+        
+    return response;
 }
 
 module.exports.getUser=async (id)=>{
     var data={};
-    await User.find({"_id":id},function(err,user){
-        if(err){
-            data={message:err.message,status:500,output:false}
-            return data;
-        }
-        else{
-            data={user:user,status:200,output:true};
-            return data;
-        }
-    });
-    return data;
+    const response=await User.find({"_id":id})
+    .then((user)=>{
+        data={user:user,status:200,output:true};
+        return data;
+    })
+    .catch((err)=>{
+        data={message:err.message,status:500,output:false}
+        return data;
+    })
+    
+    return response;
 }
 
-module.exports.updateUser= async (id,updatedValue)=>{
+module.exports.updateUser= async (id,email,updatedValue)=>{
     var data={};
-    await User.findByIdAndUpdate({"_id":id},updatedValue,function(err,docs){
+    var response={};
+    var user={};
+    const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
+    updatedValue.confirmationCode=confirmationCode;
+    User.findByIdAndUpdate({"_id":id},updatedValue,function(err,user){
         if(err){
-            data={message:err.message,status:500,output:false}
-            return data;
+            data={message:err.message,status:500,output:false};
+            response=data;
+            return response;
         }
-        else{
-            data={message:"your account updated successfully",status:200,output:true};
-            return data;
-        }
+        user=user;
     });
-    return data;
+    response = await helper.sendMail(user.username, user.email, user.confirmationCode)
+        .then((val) => {
+            console.log("val", val);
+            return val;
+        })
+        .catch((err) => {
+            data = { message: err.message, status: 500, output: false };
+            return data;
+        })
+
+
+    return response;
 }
 
 module.exports.deleteUser= async (id)=>{
     var data={};
-    await User.remove({"_id":uid}, function(err, result) { 
-        if(result===1){
-            data={message:"your account updated successfully",status:200,output:true};
-            return data;
-        }
-        else{
-            data={message:err.message,status:500,output:false};
-            return data;
-        }
-    });
-    return data;
+    const response=await User.remove({"_id":id})
+    .then((user)=>{
+        data={message:"user deleted successfully",status:200,output:true};
+        return data;
+    })
+    .catch((err)=>{
+        data={message:err.message,status:500,output:false}
+        return data;
+    })
+
+    return response;
+    
     
 }

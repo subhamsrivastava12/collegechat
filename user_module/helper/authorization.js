@@ -8,12 +8,12 @@ module.exports.authorization= async (req,res,next)=>{
     
     const token = req.cookies.jwt;
     if(!token){
-        res.status(403).send("You don't have access");
+        return res.status(403).send("You don't have access");
     }
     try{
         jwt.verify(token,process.env.SECRET,(err,data)=>{
             if(err){
-                res.status(403).send("You don't have access");
+                return res.status(403).send("You don't have access");
             }
             else if(data.email){
                 
@@ -24,23 +24,24 @@ module.exports.authorization= async (req,res,next)=>{
                 .then((user)=>{
                     if(!user){
                         
-                        res.status(404).send("server error");
+                        return res.status(404).send("User doesn't exist");
                         
                     }
+                    return next();
                          
                 })
                 .catch((err)=>{
                     console.log(err.message);
-                    res.status(500).send("server error");
+                    return res.status(500).send("server error");
                 })
             }
             
         });
-        next();
         
     }
     catch{
-        res.status(500).send("server error");
+        return res.status(500).send("server error");
         
     }
+    
 };
