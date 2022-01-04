@@ -6,7 +6,7 @@ dotenv.config();
 
 
 module.exports.resetPassword= async (token,email,password)=>{
-    let data={};
+    var data={};
     await User.findOne({
         email:email,
         resetPasswordtoken:token

@@ -5,6 +5,7 @@ const User = require('../model/user');
 dotenv.config();
 
 module.exports.authorization= async (req,res,next)=>{
+    
     const token = req.cookies.jwt;
     if(!token){
         res.status(403).send("You don't have access");

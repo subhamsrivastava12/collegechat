@@ -7,6 +7,7 @@ dotenv.config();
 
 
 module.exports.signUp = async (username, email, password) => {
+    var data={};
     const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
 
 
@@ -19,7 +20,7 @@ module.exports.signUp = async (username, email, password) => {
             newuser.save((err) => {
                 if (err) {
                     console.log("1 error");
-                    const data = { message: err.message, status: 500, output: false };
+                    data = { message: err.message, status: 500, output: false };
                     return data;
 
                 }
@@ -35,7 +36,7 @@ module.exports.signUp = async (username, email, password) => {
             if(verified){
 
                 
-                const data = { message: "Email Id is already in use", status: 200, output: false };
+                data = { message: "Email Id is already in use", status: 200, output: false };
                 return data;
     
             }
@@ -45,7 +46,7 @@ module.exports.signUp = async (username, email, password) => {
                 User.findByIdAndUpdate({ "_id": user._id }, newuser, function (err, user) {
                     if (err) {
                         console.log("2 error");
-                        const data = { message: err.message, status: 500, output: false };
+                        data = { message: err.message, status: 500, output: false };
                         return data;
                     }
                     return helper.sendMail(newuser.username, newuser.email, newuser.confirmationCode);
@@ -54,7 +55,7 @@ module.exports.signUp = async (username, email, password) => {
         }
     })
     .catch((err)=>{
-        const data = { message: err.message, status: 500, output: false };
+        data = { message: err.message, status: 500, output: false };
         return data;
     })
     

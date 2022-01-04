@@ -2,7 +2,7 @@ const User = require('../model/user');
 
 
 module.exports.getAllUser= async ()=>{
-    let data={};
+    var data={};
     await User.find({},{limit:10},function(err,users){
         if(err){
             data={message:err.message,status:500,output:false}
@@ -17,7 +17,7 @@ module.exports.getAllUser= async ()=>{
 }
 
 module.exports.getUser=async (id)=>{
-    let data={};
+    var data={};
     await User.find({"_id":id},function(err,user){
         if(err){
             data={message:err.message,status:500,output:false}
@@ -32,7 +32,7 @@ module.exports.getUser=async (id)=>{
 }
 
 module.exports.updateUser= async (id,updatedValue)=>{
-    let data={};
+    var data={};
     await User.findByIdAndUpdate({"_id":id},updatedValue,function(err,docs){
         if(err){
             data={message:err.message,status:500,output:false}
@@ -47,7 +47,7 @@ module.exports.updateUser= async (id,updatedValue)=>{
 }
 
 module.exports.deleteUser= async (id)=>{
-    let data={};
+    var data={};
     await User.remove({"_id":uid}, function(err, result) { 
         if(result===1){
             data={message:"your account updated successfully",status:200,output:true};

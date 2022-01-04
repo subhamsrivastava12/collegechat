@@ -4,7 +4,7 @@ const User = require('../model/user');
 
 
 module.exports.resetPasswordVerification=async(token)=>{
-    let data ={};
+    var data ={};
     await User.findOne({
         resetPasswordtoken:token,
     })
