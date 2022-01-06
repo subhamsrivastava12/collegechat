@@ -15,3 +15,18 @@ module.exports.createUser = (username,email,password,confirmationCode)=>{
     return newuser;
 
 }
+
+module.exports.updateUser = (username,email,password,confirmationCode)=>{
+
+
+    const newuser = {
+        username:username,
+        email:email,
+        password:bcrypt.hashSync(password,10),
+        confirmationCode: confirmationCode
+
+    };
+
+    return newuser;
+
+}
