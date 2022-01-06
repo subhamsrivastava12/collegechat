@@ -4,7 +4,7 @@ const {resetPassword}=require("../services/resetpassword");
 dotenv.config();
 
 
-module.exports.resetPassword=(req,res)=>{
+module.exports.resetPassword=async(req,res)=>{
     resetPassword(req.params['token'],req.body.email,req.body.password)
     .then((data)=>{
         console.log("data",data);

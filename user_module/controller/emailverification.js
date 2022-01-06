@@ -3,7 +3,7 @@ const {emailVerification}=require("../services/emailverification");
 dotenv.config();
 
 
-module.exports.emailVerification=(req,res)=>{
+module.exports.emailVerification= async (req,res)=>{
     console.log(req.params.code);
     emailVerification(req.params['code'])
     .then((data)=>{

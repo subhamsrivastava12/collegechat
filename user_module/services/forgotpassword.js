@@ -45,8 +45,10 @@ module.exports.forgotPassword= async (username,email)=>{
         return response;
     }
     console.log("user1",user1);
+    
     const token = jwt.sign({email:email},process.env.SECRET);
     console.log("token",token);
+    
     await User.findByIdAndUpdate({ "_id": user1._id }, {"resetPasswordtoken":token})
     .catch((err)=>{
         bool=true;
