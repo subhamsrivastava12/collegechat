@@ -9,7 +9,7 @@ const {authorization} = require("../helper/authorization");
 
 
 
-router.get('/',authorization,getAllUsers);
+router.post('/',authorization,getAllUsers);
 router.get('/:id',authorization,getUser);
 router.put('/:id',authorization,updateUser);
 router.get('/delete/:id',authorization,deleteUser);

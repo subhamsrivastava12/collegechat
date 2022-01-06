@@ -2,7 +2,8 @@ const Services = require("../services/user");
 
 
 module.exports.getAllUsers=async (req,res)=>{
-    Services.getAllUser()
+    const string =req.body.searchtext;
+    Services.getAllUser(string)
     .then((data)=>{
         console.log("data",data);
         res.json(data);
