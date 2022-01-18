@@ -1,0 +1,15 @@
+const {getFriendslist} = require("../service/friendslist");
+
+module.exports.getFriendslist=async (req,res)=>{
+    const userId=req.cookies.userId;
+    getFriendslist(userId)
+    .then((data)=>{
+        console.log("data",data);
+        res.json(data);
+    })
+    .catch((err)=>{
+        res.status(500).send(err.message);
+    })
+    
+}
+

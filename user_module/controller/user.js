@@ -2,7 +2,9 @@ const Services = require("../services/user");
 
 
 module.exports.getAllUsers=async (req,res)=>{
+    console.log("req",req.body);
     const string =req.body.searchtext;
+    console.log("string",string);
     Services.getAllUser(string)
     .then((data)=>{
         console.log("data",data);
@@ -16,7 +18,8 @@ module.exports.getAllUsers=async (req,res)=>{
 }
 
 module.exports.getUser=async (req,res)=>{
-    Services.getUser(req.params.id)
+    const userId=req.cookies.userId;
+    Services.getUser(userId)
     .then((data)=>{
         console.log("data",data);
         res.json(data);
@@ -28,12 +31,13 @@ module.exports.getUser=async (req,res)=>{
 }
 
 module.exports.updateUser=async (req,res)=>{
+    const userId=req.cookies.userId;
     const updatedValue={
         username:req.body.username,
         email:req.body.email,
         email_verified:false,
     }
-    Services.updateUser(req.params["id"],req.body.email,updatedValue)
+    Services.updateUser(userId,req.body.email,updatedValue)
     .then((data)=>{
         console.log("data",data);
         res.json(data);
@@ -44,7 +48,9 @@ module.exports.updateUser=async (req,res)=>{
 }
 
 module.exports.deleteUser=async (req,res)=>{
-    Services.deleteUser(req.params.id)
+    const userId=req.cookies.userId;
+    console.log("deleteid",userId);
+    Services.deleteUser(userId)
     .then((data)=>{
         console.log("data",data);
         res.json(data);

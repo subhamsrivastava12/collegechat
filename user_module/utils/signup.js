@@ -8,7 +8,9 @@ module.exports.createUser = (username,email,password,confirmationCode)=>{
         username:username,
         email:email,
         password:bcrypt.hashSync(password,10),
-        confirmationCode: confirmationCode
+        confirmationCode: confirmationCode,
+        resetPasswordtoken: confirmationCode
+
 
     });
 
@@ -23,8 +25,8 @@ module.exports.updateUser = (username,email,password,confirmationCode)=>{
         username:username,
         email:email,
         password:bcrypt.hashSync(password,10),
-        confirmationCode: confirmationCode
-
+        confirmationCode: confirmationCode,
+        resetPasswordtoken: confirmationCode
     };
 
     return newuser;

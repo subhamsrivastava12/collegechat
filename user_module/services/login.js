@@ -32,7 +32,7 @@ module.exports.login = async (email,password)=>{
         }
         
         
-        data={message:"user login succesfully",status:200 ,token:token,output :true};
+        data={message:"user login succesfully",status:200 ,token:token,userId:user._id, username:user.username, output :true};
         //console.log("data",data);
         return data;
     })

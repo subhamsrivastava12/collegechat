@@ -1,8 +1,7 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const User = require('../model/user');
-const bcrypt = require('bcrypt');
-const helper = require("../helper/forgotpassword");
+const helper = require("../utils/forgotpassword");
 
 dotenv.config();
 
@@ -49,12 +48,13 @@ module.exports.forgotPassword= async (username,email)=>{
     const token = jwt.sign({email:email},process.env.SECRET);
     console.log("token",token);
     
-    await User.findByIdAndUpdate({ "_id": user1._id }, {"resetPasswordtoken":token})
-    .catch((err)=>{
-        bool=true;
-        data = { message: err.message, status: 500, output: false };
-        return data;
-    })
+    // await User.findByIdAndUpdate({ "_id": user1._id }, {"resetPasswordtoken":token})
+    // .catch((err)=>{
+    //     bool=true;
+    //     data = { message: err.message, status: 500, output: false };
+    //     return data;
+    // })
+
     if(!bool){
     const response1=await helper.sendMail(username,email,token)
         .then((val)=>{

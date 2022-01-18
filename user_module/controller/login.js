@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
 const {login}=require("../services/login");
-const bcrypt = require('bcrypt');
 
 dotenv.config();
 
@@ -10,11 +9,22 @@ module.exports.login=async (req,res)=>{
     .then((data)=>{
         console.log("data",data);
         const token = data.token;
+        data.token=null;
+        const userId = data.userId;
+        const username = data.username;
         console.log("token",token);
         if(token){
             res.cookie("jwt",token,{
                 httpOnly:true,
-                maxAge:900000
+                maxAge:9000000
+            });
+            res.cookie('userId',userId,{
+                httpOnly:true,
+                maxAge:9000000
+            })
+            res.cookie('username',username,{
+                httpOnly:true,
+                maxAge:9000000
             })
             
         }

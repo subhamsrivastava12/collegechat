@@ -30,8 +30,23 @@ const userSchema = mongoose.Schema({
     resetPasswordtoken:{
         type:String,
         unique:true
-    }
-    
+    },
+    sentRequest:[{
+        _id:false,
+        userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+        username:{type:String, default:''}
+        
+    }],
+    friendRequest:[{
+        _id:false,
+        userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+        username:{type:String, default:''}
+    }],
+    friendsList:[{
+        _id:false,
+        userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+        username:{type:String, default:''}
+    }]
 
 },{timestamps:true});
 

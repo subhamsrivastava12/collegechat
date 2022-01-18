@@ -1,8 +1,8 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const User = require('../model/user');
-const helper = require("../helper/emailverification");
-const { createUser,updateUser } = require("../helper/signup");
+const helper = require("../utils/emailverification");
+const { createUser,updateUser } = require("../utils/signup");
 dotenv.config();
 
 
@@ -25,7 +25,7 @@ module.exports.signUp = async (username, email, password) => {
                 newuser.save((err) => {
                     if (err) {
                         bool = true;
-                        console.log("1 error");
+                        console.log("err1",err.message);
                         data = { message: err.message, status: 500, output: false };
                         return data;
 
@@ -48,6 +48,7 @@ module.exports.signUp = async (username, email, password) => {
                 return val;
             })
             .catch((err) => {
+                console.log("err2",err.message);
                 data = { message: err.message, status: 500, output: false };
                 return data;
             })
