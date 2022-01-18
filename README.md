@@ -1,4 +1,5 @@
 # Collegechat
+Application which connects every students within a college.
 
 **To run the code locally**
 
