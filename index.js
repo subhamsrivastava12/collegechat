@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require('./user_module/router/user');
 const authRoutes = require('./user_module/router/auth');
 const friendRoutes = require('./friend_module/router/friend');
+const postRoutes = require('./post_module/router/post');
+
 const db = require("./config/dbconfig");
 dotenv.config();
 
@@ -25,6 +27,7 @@ function middleware(req,res,next){
 app.use('/users',middleware,userRoutes);
 app.use('/auth',middleware,authRoutes);
 app.use('/friend',middleware,friendRoutes);
+app.use('/post',middleware,postRoutes);
 
 const PORT = process.env.PORT || 3000;
 

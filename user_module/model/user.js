@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Post = require("../../post_module/model/post")
 
 const userSchema = mongoose.Schema({
     username:
@@ -46,7 +46,16 @@ const userSchema = mongoose.Schema({
         _id:false,
         userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
         username:{type:String, default:''}
-    }]
+    }],
+    post:[{    
+        type:{type:mongoose.Schema.Types.ObjectId,ref:'Post'}
+    }],
+    sharedpost:[{
+        _id:false,
+        postId:{type:mongoose.Schema.Types.ObjectId,ref:'Post'},
+        sharedBy:{type:String,required:true}
+    }],
+    
 
 },{timestamps:true});
 
