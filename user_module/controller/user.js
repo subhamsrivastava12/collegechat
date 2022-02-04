@@ -34,8 +34,14 @@ module.exports.updateUser=async (req,res)=>{
     const userId=req.cookies.userId;
     const updatedValue={
         username:req.body.username,
-        email:req.body.email,
-        email_verified:false,
+        interests:req.body.interests,
+        role:req.body.role,
+        public:req.body.public,
+        notification:req.body.notification
+    }
+    if(req.body.email){
+        updatedValue.email=req.body.email;
+        updatedValue.email_verified=false;
     }
     Services.updateUser(userId,req.body.email,updatedValue)
     .then((data)=>{

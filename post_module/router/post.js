@@ -34,7 +34,8 @@ router.post('/',authorization,upload.single("image"),createPost);
 router.get('/:id',authorization,getPost);
 router.put('/:id',authorization,upload.single("image"),updatePost);
 router.delete('/:id',authorization,deletePost);
-router.get('/',authorization,getUserpost);
+// router.get('/',authorization,getUserpost);
+router.get('/user/:id',authorization,getUserpost);
 router.get('/:id/like',authorization,like);
 
 
@@ -47,5 +48,6 @@ router.put('/comment/:id',authorization,updateComment);
 router.delete('/comment/:id',authorization,deleteComment);
 router.post('/reply/:id',authorization,createReply);
 router.get('/reply/:id/:page',authorization,getReply);
+
 
 module.exports=router;

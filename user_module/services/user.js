@@ -38,16 +38,22 @@ module.exports.updateUser = async (id, email, updatedValue) => {
     var data = {};
     var response = {};
     var user = {};
-    const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
-    updatedValue.confirmationCode = confirmationCode;
-    User.findByIdAndUpdate({ "_id": id }, updatedValue, function (err, user) {
-        if (err) {
+    if(email){
+        const confirmationCode = jwt.sign({ email: email }, process.env.SECRET);
+        updatedValue.confirmationCode = confirmationCode;
+    }
+    response = await User.findByIdAndUpdate({ "_id": id }, updatedValue)
+        .then((user)=>{
+            user = user;
+            data = { message: "data updated successfuly", status: 200, output: true };
+            return data;
+        })
+        .catch((err)=>{
             data = { message: err.message, status: 500, output: false };
-            response = data;
-            return response;
-        }
-        user = user;
-    });
+            return data;
+        })
+        
+    if(email){
     response = await helper.sendMail(user.username, user.email, user.confirmationCode)
         .then((val) => {
             console.log("val", val);
@@ -57,7 +63,7 @@ module.exports.updateUser = async (id, email, updatedValue) => {
             data = { message: err.message, status: 500, output: false };
             return data;
         })
-
+    }
 
     return response;
 }

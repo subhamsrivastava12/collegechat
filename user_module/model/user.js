@@ -12,6 +12,8 @@ const userSchema = mongoose.Schema({
         type:String,
         unique:true
     },
+    interests:[{type:String,default:''}],
+    role:[{type:String,default:''}],
     password:
     {
         type:String,
@@ -50,15 +52,20 @@ const userSchema = mongoose.Schema({
     post:[{    
         type:{type:mongoose.Schema.Types.ObjectId,ref:'Post'}
     }],
+    likedpost:[{    
+        type:{type:mongoose.Schema.Types.ObjectId,ref:'Post'}
+    }],
     sharedpost:[{
         _id:false,
         postId:{type:mongoose.Schema.Types.ObjectId,ref:'Post'},
         sharedBy:{type:String,required:true}
     }],
+    public:{type:Boolean , default:true},
+    notification:{type:Boolean,default:false}
     
 
 },{timestamps:true});
 
-
+//userSchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('User',userSchema);

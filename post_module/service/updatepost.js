@@ -30,7 +30,7 @@ module.exports.updatePost = async (req, res) => {
         console.log("result", result);
         var updatedPost = {
             caption: req.body.caption,
-            description: req.body.description,
+            tags: req.body.tags,
             image: result.secure_url,
             image_id: result.public_id
         };
@@ -53,7 +53,7 @@ module.exports.updatePost = async (req, res) => {
     else {
         var updatedPost = {
             caption: req.body.caption,
-            description: req.body.description,
+            tags: req.body.tags,
         };
         console.log("post", updatedPost);
         response = await Post.findByIdAndUpdate({ "_id": postId }, updatedPost)

@@ -1,9 +1,10 @@
-const {getPost} = require("../service/getpost")
+const {getTagsanalytics} = require("../services/gettagsanalytics");
 
-module.exports.getPost=async (req,res)=>{
-    const postId=req.params.id;
+
+module.exports.getTagsanalytics=async (req,res)=>{
     const userId=req.cookies.userId;
-    getPost(postId,userId)
+    console.log("uid",userId);
+    getTagsanalytics(userId)
     .then((data)=>{
         console.log("data",data);
         res.json(data);
@@ -11,6 +12,5 @@ module.exports.getPost=async (req,res)=>{
     .catch((err)=>{
         res.status(500).send(err.message);
     })
-    
     
 }

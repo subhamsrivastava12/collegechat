@@ -6,10 +6,10 @@ const postSchema = mongoose.Schema({
         type:String,
         default:''
     },
-    description:{
+    tags:[{
         type:String,
         default:''
-    },
+    }],
     image:String,
     image_id:String,
     like:{

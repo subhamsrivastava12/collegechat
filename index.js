@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
 const userRoutes = require('./user_module/router/user');
+const userAnaytics = require('./user_module/router/analytics');
 const authRoutes = require('./user_module/router/auth');
 const friendRoutes = require('./friend_module/router/friend');
 const postRoutes = require('./post_module/router/post');
@@ -25,6 +26,8 @@ function middleware(req,res,next){
 }
 
 app.use('/users',middleware,userRoutes);
+app.use('/users/analytics',middleware,userAnaytics);
+
 app.use('/auth',middleware,authRoutes);
 app.use('/friend',middleware,friendRoutes);
 app.use('/post',middleware,postRoutes);
