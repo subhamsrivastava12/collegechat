@@ -40,7 +40,7 @@ module.exports.getTagsanalytics = async (userId) => {
 
   console.log("tag", tags);
 
-  response = { mostlikedtags: tags, status: 200, output: true };
+  response = { message:"most liked tags",data: tags, status: 200, output: true };
 
   return response;
 };

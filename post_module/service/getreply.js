@@ -10,7 +10,7 @@ module.exports.getReply = async (commentId, page) => {
     .limit(5)
     .skip((page - 1) * 5)
     .then((comment) => {
-      data = { reply: comment, status: 500, output: false };
+      data = { message:"reply made on this comment",data: comment, status: 500, output: false };
       return data;
     })
     .catch((err) => {

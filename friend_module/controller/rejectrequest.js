@@ -1,5 +1,12 @@
 const {rejectRequest} = require("../service/rejectrequest");
 
+
+/*
+{
+    "senderId":"61e47f1424754d33e0209dff"
+}
+*/
+
 module.exports.rejectRequest=async (req,res)=>{
     const senderId=req.body.senderId;
     const receiverId=req.cookies.userId;

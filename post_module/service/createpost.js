@@ -52,9 +52,10 @@ module.exports.createPost = async (req, res) => {
   console.log("user", user1);
   user1.post.unshift(post);
   response = await User.findByIdAndUpdate({ _id: userId }, user1)
-    .then(() => {
+    .then((val) => {
       data = {
         message: "post created successfully",
+        data:val,
         status: 200,
         output: true,
       };

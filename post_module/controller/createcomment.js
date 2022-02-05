@@ -1,6 +1,14 @@
 const {createComment} = require("../service/createcomment");
 
 
+/*
+req object
+{
+    "text":"type your comment"
+}
+
+*/
+
 module.exports.createComment = async(req,res)=>{
     
     createComment(req,res)

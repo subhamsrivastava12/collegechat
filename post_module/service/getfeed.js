@@ -35,7 +35,7 @@ module.exports.getFeed = async (userId, page) => {
     .skip((page - 1) * 5)
     .limit(5)
     .then((post) => {
-      data = { feed: post, status: 200, output: true };
+      data = { message:"users feed",data: post, status: 200, output: true };
       return data;
     })
     .catch((err) => {

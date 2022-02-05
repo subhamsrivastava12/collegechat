@@ -1,6 +1,14 @@
 const {createReply} = require("../service/createreply");
 
 
+/*
+req object
+{
+    "text":"type your reply"
+}
+
+*/
+
 module.exports.createReply = async(req,res)=>{
     createReply(req,res)
     .then((data)=>{

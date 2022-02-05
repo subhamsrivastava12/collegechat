@@ -30,7 +30,7 @@ module.exports.sharePost=async (postId,sharedto,sharedby)=>{
     user1.sharedpost.push(newpost);
     response= await User.findByIdAndUpdate({ "_id": sharedto }, user1)
         .then((val) => {
-            data = { message: "Post shared successfully", status: 200, output: true };
+            data = { message: "Post shared successfully", data:val,status: 200, output: true };
 
             return data;
         })

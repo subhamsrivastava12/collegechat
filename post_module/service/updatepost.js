@@ -58,12 +58,12 @@ module.exports.updatePost = async (req, res) => {
         console.log("post", updatedPost);
         response = await Post.findByIdAndUpdate({ "_id": postId }, updatedPost)
             .then((val) => {
-                data = { message: "post updated successfully", status: 200, output: true };
+                data = { message: "post updated successfully", data:val,status: 200, output: true };
 
                 return data;
             })
             .catch((err) => {
-                data = { message: err.message, status: 500, output: false };
+                data = { message: err.message,  status: 500, output: false };
 
                 return data;
             });

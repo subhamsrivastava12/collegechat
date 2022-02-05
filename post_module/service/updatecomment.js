@@ -10,7 +10,7 @@ module.exports.updateComment=async (req)=>{
 
     response= await Comment.findByIdAndUpdate({ "_id": commentId }, updatedComment)
         .then((val) => {
-            data = { message: "Comment updated successfully", status: 200, output: true };
+            data = { message: "Comment updated successfully", data:val,status: 200, output: true };
 
             return data;
         })

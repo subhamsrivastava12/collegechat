@@ -7,7 +7,8 @@ module.exports.getRequest = async (userId) => {
     .then((user) => {
       console.log("list", user[0].friendRequest);
       data = {
-        friendRequest: user[0].friendRequest,
+        message:"user's friend request",
+        data: user[0].friendRequest,
         status: 200,
         output: true,
       };

@@ -1,5 +1,14 @@
 const {acceptRequest} = require("../service/acceptrequest");
 
+/*
+req object
+{
+    "senderId":"************",
+    "senderName":"**************"
+}
+
+*/ 
+
 module.exports.acceptRequest=async (req,res)=>{
     const senderId=req.body.senderId;
     const senderName=req.body.senderName;

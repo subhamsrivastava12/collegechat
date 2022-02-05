@@ -34,6 +34,6 @@ module.exports.getComment = async (postId, page, userId) => {
   if (!response.allowed) {
     return response;
   }
-  response = { message: post1, status: 200, output: true };
+  response = { message: "comments made on this post",data:post1, status: 200, output: true };
   return response;
 };

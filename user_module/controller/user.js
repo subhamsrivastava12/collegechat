@@ -1,4 +1,7 @@
 const Services = require("../services/user");
+const {updateUser} = require("../services/updateuser");
+const {deleteUser} = require("../services/deleteuser");
+
 
 
 module.exports.getAllUsers=async (req,res)=>{
@@ -30,6 +33,20 @@ module.exports.getUser=async (req,res)=>{
     
 }
 
+/*
+request object
+{
+    any key here can be updated
+
+    "email":"***************@gmail.com",
+    "password":"**********"
+    "notification":true/false,
+    public:true/false
+    "role":["SDE","Data Scientist"],
+    "interests":["CP","Designing"]
+}
+*/
+
 module.exports.updateUser=async (req,res)=>{
     const userId=req.cookies.userId;
     const updatedValue={
@@ -43,7 +60,7 @@ module.exports.updateUser=async (req,res)=>{
         updatedValue.email=req.body.email;
         updatedValue.email_verified=false;
     }
-    Services.updateUser(userId,req.body.email,updatedValue)
+    updateUser(userId,req.body.email,updatedValue)
     .then((data)=>{
         console.log("data",data);
         res.json(data);
@@ -56,7 +73,7 @@ module.exports.updateUser=async (req,res)=>{
 module.exports.deleteUser=async (req,res)=>{
     const userId=req.cookies.userId;
     console.log("deleteid",userId);
-    Services.deleteUser(userId)
+    deleteUser(userId)
     .then((data)=>{
         console.log("data",data);
         res.json(data);

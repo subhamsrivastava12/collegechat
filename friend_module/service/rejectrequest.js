@@ -60,7 +60,8 @@ module.exports.rejectRequest = async (senderId, receiverId) => {
     }
   }
 
-  response = await User.findByIdAndUpdate({ _id: senderId }, sender[0]).catch(
+  response = await User.findByIdAndUpdate({ _id: senderId }, sender[0])
+  .catch(
     (err) => {
       bool = false;
       data = { message: err.message, status: 500, output: false };
@@ -74,6 +75,7 @@ module.exports.rejectRequest = async (senderId, receiverId) => {
 
   response = {
     message: "Friend Request rejected successfully",
+    data:receiver[0],
     status: 200,
     output: true,
   };

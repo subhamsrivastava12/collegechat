@@ -33,6 +33,6 @@ module.exports.getPost = async (postId, userId) => {
   if (!response.allowed) {
     return response;
   }
-  response = { message: post1, status: 200, output: true };
+  response = { message:"post details",data: post1, status: 200, output: true };
   return response;
 };

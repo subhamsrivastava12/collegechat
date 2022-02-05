@@ -43,6 +43,7 @@ module.exports.createComment = async (req, res) => {
     .then((val) => {
       data = {
         message: "Comment posted successfully",
+        data:val,
         status: 200,
         output: true,
       };

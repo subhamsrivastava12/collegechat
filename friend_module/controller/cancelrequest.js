@@ -1,5 +1,13 @@
 const {cancelRequest} = require("../service/cancelrequest");
 
+/*
+req object
+{
+    "receiverId":"**************"
+}
+
+*/
+
 module.exports.cancelRequest=async (req,res)=>{
     const receiverId=req.body.receiverId;
     const senderId=req.cookies.userId;

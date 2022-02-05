@@ -76,7 +76,8 @@ module.exports.acceptRequest = async (
   response = await User.findByIdAndUpdate(
     { _id: receiverId },
     receiver[0]
-  ).catch((err) => {
+  )
+  .catch((err) => {
     bool = false;
     data = { message: err.message, status: 500, output: false };
     return data;
@@ -88,8 +89,9 @@ module.exports.acceptRequest = async (
   if (sender[0].notification) {
     response = await sendMail(senderName, sender[0].email, receiverName)
       .then((val) => {
-        console.log("val", val);
-        return val;
+        data=val;
+        data["data"]=receiver[0];
+        return data;
       })
       .catch((err) => {
         data = { message: err.message, status: 500, output: false };

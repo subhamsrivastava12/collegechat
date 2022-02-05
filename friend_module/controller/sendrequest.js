@@ -1,5 +1,14 @@
 const {sendRequest} = require("../service/sendrequest");
 
+/*
+req object
+{
+    "receiverId":"************",
+    "receiverName":"**************"
+}
+
+*/ 
+
 module.exports.sendRequest=async (req,res)=>{
     const receiverId=req.body.receiverId;
     const receiverName=req.body.receiverName;

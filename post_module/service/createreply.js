@@ -53,7 +53,7 @@ module.exports.createReply = async (req, res) => {
 
   response = await Comment.findByIdAndUpdate({ _id: commentId }, comment1)
     .then((val) => {
-      data = { message: "reply made successfully", status: 200, output: true };
+      data = { message: "reply made successfully", data:val,status: 200, output: true };
 
       return data;
     })

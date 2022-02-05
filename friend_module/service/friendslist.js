@@ -5,7 +5,7 @@ module.exports.getFriendslist = async (userId) => {
   var response = {};
   response = await User.find({ _id: userId })
     .then((user) => {
-      data = { Friends: user[0].friendsList, status: 200, output: true };
+      data = { message:"user's friendlist",data: user[0].friendsList, status: 200, output: true };
       return data;
     })
     .catch((err) => {

@@ -40,7 +40,7 @@ module.exports.getFriendsuggestion = async (userId) => {
       break;
     }
   }
-  response = { friendSuggestion: suggestion, status: 200, output: true };
+  response = { message:"Friend suggestions for user", data: suggestion, status: 200, output: true };
 
   return response;
 };

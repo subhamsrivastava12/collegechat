@@ -41,7 +41,7 @@ module.exports.getUserpost = async (userId, page, requserId) => {
   for (var i = 0; i < user1.friendsList.length; i++) {
     if (user1.friendsList[i].userId == userId) {
       bool = true;
-      data = { message: user1, status: 200, output: true };
+      data = { message: "posts created by user",data:user1, status: 200, output: true };
       return data;
     }
   }

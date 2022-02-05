@@ -24,7 +24,7 @@ module.exports.sharedFeed=async (userId,page)=>{
                 ).limit(5).skip((page-1)*5)
             .then((post)=>{
                 console.log("post",posts);
-                data={"sharedfeed":post,status:200,output:true};
+                data={message:"sharedfeed",data:post,status:200,output:true};
                 return data;
             })
             .catch((err)=>{

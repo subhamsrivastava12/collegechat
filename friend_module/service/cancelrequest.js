@@ -6,6 +6,7 @@ module.exports.cancelRequest = async (senderId, receiverId) => {
   var receiver = {};
   var bool = true;
   var response = {};
+  var updatedsender={};
   response = await User.find({ _id: senderId })
     .then((user) => {
       sender = user;
@@ -76,6 +77,7 @@ module.exports.cancelRequest = async (senderId, receiverId) => {
 
   response = {
     message: "You have unsent your friend request",
+    data:sender[0],
     status: 200,
     output: true,
   };

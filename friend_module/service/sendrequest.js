@@ -12,6 +12,7 @@ module.exports.sendRequest = async (
   var receiver = {};
   var bool = true;
   var response = {};
+  var updatedsender={};
   console.log("senderId", senderId);
   console.log("receiverId", receiverId);
   response = await User.find({ _id: senderId })
@@ -32,9 +33,17 @@ module.exports.sendRequest = async (
     userId: receiverId,
     username: receiverName,
   };
+  for (var i = 0; i < sender[0].sentRequest.length; i++) {
+    if (sender[0].sentRequest[i].userId == receiverId) {
+      sender[0].sentRequest.splice(i, 1);
+      break;
+    }
+  }
+
   console.log("sender", sender);
   sender[0].sentRequest.push(sendrequest);
-  response = await User.findByIdAndUpdate({ _id: senderId }, sender[0]).catch(
+  response = await User.findByIdAndUpdate({ _id: senderId }, sender[0])
+  .catch(
     (err) => {
       console.log("err2", err.message);
       bool = false;
@@ -79,7 +88,8 @@ module.exports.sendRequest = async (
   if (receiver[0].notification) {
     response = await sendMail(senderName, receiver[0].email, receiverName)
       .then((val) => {
-        console.log("val", val);
+        data=val;
+        data["data"]=sender[0];
         return val;
       })
       .catch((err) => {

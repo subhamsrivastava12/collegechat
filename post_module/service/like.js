@@ -63,6 +63,7 @@ module.exports.like = async (postId, likeId) => {
         .then((val) => {
             data = {
                 message: "Like operation performed successfully",
+                data:val,
                 status: 200,
                 output: true,
             };

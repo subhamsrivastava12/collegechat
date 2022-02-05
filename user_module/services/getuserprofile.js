@@ -26,20 +26,20 @@ module.exports.getUserprofile = async (userId, profileId) => {
   console.log("public", user1.public);
   if (user1.public) {
     bool = true;
-    data = { message: user1, status: 200, output: true, allowed: true };
+    data = { message: "user exists",data:user1, status: 200, output: true, allowed: true };
     return data;
   }
 
   if (userId == profileId) {
     bool = true;
-    data = { message: user1, status: 200, output: true, allowed: true };
+    data = { message: "user exists",data:user1, status: 200, output: true, allowed: true };
     return data;
   }
 
   for (var i = 0; i < user1.friendsList.length; i++) {
     if (user1.friendsList[i].userId == userId) {
       bool = true;
-      data = { message: user1, status: 200, output: true, allowed: true };
+      data = { message: "user exists",data:user1, status: 200, output: true, allowed: true };
       return data;
     }
   }

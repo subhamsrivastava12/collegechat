@@ -2,7 +2,14 @@ const dotenv = require("dotenv");
 const {login}=require("../services/login");
 
 dotenv.config();
-
+/*
+request object
+{
+    
+    "email":"***************@gmail.com",
+    "password":"**********"
+}
+*/
 
 module.exports.login=async (req,res)=>{
     login(req.body.email,req.body.password)
@@ -16,15 +23,15 @@ module.exports.login=async (req,res)=>{
         if(token){
             res.cookie("jwt",token,{
                 httpOnly:true,
-                maxAge:9000000
+                maxAge:24*90*1000 //24 hr
             });
             res.cookie('userId',userId,{
                 httpOnly:true,
-                maxAge:9000000
+                maxAge:24*90*1000
             })
             res.cookie('username',username,{
                 httpOnly:true,
-                maxAge:9000000
+                maxAge:24*60*1000
             })
             
         }
