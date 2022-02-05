@@ -38,6 +38,9 @@ const PORT = process.env.PORT || 3000;
 app.get('/ping',(req,res)=>{
     res.send("Hello World");
 });
+app.get('/',(req,res)=>{
+    res.send("Welcome to ConnectNgrow");
+});
 
 app.all('*',(req,res)=> {
     res.sendStatus(404);
